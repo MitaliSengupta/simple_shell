@@ -1,6 +1,25 @@
 #include "shell.h"
 
 /**
+ *
+ *
+ *
+ *
+ *
+ */
+unsigned int matching(char n, const char *s)
+{
+	unsigned int i = 0;
+
+	for (; s[i] != '\0'; i++)
+	{
+		if (n == s[i])
+			return (i);
+	}
+	return (0);
+}
+
+/**
  * _strtok - splits string based of delimiter
  * Uses Static var to remember string.
  * @str: input string thats duplicated and modified
@@ -10,43 +29,40 @@
 char *_strtok(char *str, const char *delim)
 {
 	static char *token_1;
-	static size_t i;
-	char *token;
-	size_t j;
+	static char *next;
+	unsigned int n;
 
-	if (str == NULL && i == 0)/*if str is null and never been run before*/
+	if (str != NULL)
+		next = str;
+	token_1 = next;
+	if (token_1 == NULL)
 		return (NULL);
-	if (str != NULL)/*during the first run*/
+	for (n = 0; next[n] != '\0'; n++)
 	{
-		token = _strdup(str);/*duplicate string*/
-		for (i = 0; token[i]; i++)/*loop through token*/
-		{
-			for (j = 0; delim[j]; j++)/*loop through delim*/
-			{
-				if (token[i] == delim[j])/*if match*/
-				{
-					i++;/*duplicate remainder of token for latter access*/
-					token_1 = _strdup(&token[i]),	i--;/*replace delim with null*/
-					token[i] = '\0';
-					token = _realloc(token, 0, i);/*realloc to required amount*/
-					if (token_1 == NULL || token == NULL)
-						return (NULL);
-					return (token);
-				}
-				if (token[i] == '\n')/*no match but when string ends in \n*/
-				{
-					free(token_1);/*free static token1 used to save remainder*/
-					return (token);
-				}
-			}
-		}
-		if (token == NULL)/*no match return duplicate copy*/
-		{
-			free(token_1);
-			return (token);
-		}
+		if (matching(next[n], delim) == 0)
+			break;
 	}
-	if (str == NULL)/*strtok(NULL,delim); access rest of tokens*/
-		return (_strtok(token_1, delim));/*use previously saved remainder*/
-	return (NULL);
+	if (next[n] == '\0'; || next[n] == '#')
+	{
+		next = NULL;
+		return (NULL);
+	}
+	token_1 = next + n;
+	next = token_1;
+
+	for (n = 0; next[n] ! = '\0'; n++)
+	{
+		if (matching(next[n], delim) == 1)
+			break;
+	}
+	if (next[n] == '\0')
+		next == NULL;
+	else
+	{
+		next[n] = '\0';
+		next = next + n + 1;
+		if (*next == '\0')
+			next == NULL;
+	}
+	return (token_1);
 }

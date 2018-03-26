@@ -2,72 +2,66 @@
 #define SHELL_H
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <stdarg.h>
+#include <unistd.h>
+#include <string.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <sys/stat.h>
 #include <limits.h>
-#include <dirent.h>
-#include <unistd.h>
 #include <signal.h>
-#include <fcntl.h>
+
 #define UNUSED(x) (void)(x)
 
-/**
-* struct printf_functions - struct to match type with printer funcitons
-* @type: input to determine type of printf function
-* @printer: specific printf function
-* Description: the the correct copy function to use
-**/
-typedef struct printf_functions
+extern unsigned int flag;
+
+typedef struct input
 {
-	char type;
-	int (*printer)();
-} pstruct;
+	char **tokens;
+	char *buffer;
+	char **env;
+	char **commands;
+	char **argv;
+	int status;
+	size_t count;
+} input_t;
 
-/*strtok function*/
-char *_strtok(char *str, const char *delim);
+typedef struct command
+{
+	char *comm;
+	void(*f)(int_t *);
+} command_t;
 
-/*command function*/
-int cmdExec(char **tokens, char **env);
-int specialExec(char **tokens, char **env, int controller, char *home);
-int _echo(char **tokens, char **env);
-int _cd(char **tokens, char **env, char *home);
-int _env(char **env);
-int _cp(char **tokens);
+/* Environ: _env.c, set_unsetenv.c */
 
-/*Printf*/
-int _printf(const char *format, ...);
-int _putchar(char c);
-int print_percent(void);
-int print_char(va_list arg);
-int print_string(va_list arg);
-int print_number(va_list arg);
+char **init_env(char **environ);
+void free_environ(char **environ);
+void _setenv(input_t *inputs);
+void _unsetenv(input_t *inputs);
 
-/*STRING*/
-char *_strcpy(char *dest, char *src);
+/* Helper functions: helper_func.c , helper_func2.c */
+
 char *_strcat(char *dest, char *src);
-char *_strstr(char *haystack, char *needle);
-int _strlen(char *s);
-int _strncmp(char *s1, char *s2, int n);
-int _strcmp(char *s1, char *s2);
-char *_strncpy(char *dest, char *src, int i, int n);
+unsigned int _strlen(char *s);
+int _strncmp(char *s1, char *s2);
+char *_strdup(char *duplicate);
+ssize_t _puts(char *s);
+void _printe(char *s);
+char *_int_str(unsigned int count);
 
-/*tokenizer*/
-char **tokenize(char *string, const char *delimiter);
-int cmdchk(char **token, char **environ);
-char *delimiters(char *s);
+/* Memory management: _realloc.c */
 
-/*MEMORYFUNC*/
-char *_strdup(char *str);
-void *_realloc(void *ptr, size_t old_size, size_t new_size);
+char **_realloc(char **ptr, size_t *size);
 
-/*free memory*/
-char **ptofree(char *p, int n);
+/* Signal management: _signal.c */
 
-/*SIGNAL*/
-void signal_handler(int s);
+static void sig_handler(int sig_handler);
+
+/* custom string token: _strtok.c , tokenizer.c */
+
+unsigned int matching(char n, const char *s);
+char *_strtok(char *str, const char *delim);
+char **tokenize(char *arguments, char *delimiter);
+
+
 
 #endif
