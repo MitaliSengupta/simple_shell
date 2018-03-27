@@ -1,11 +1,11 @@
 #include "shell.h"
 
 /**
+ * _error - prints error messages to standard error
+ * @inputs: pointer to struct of variables
+ * @message: message to print
  *
- *
- *
- *
- *
+ * Return: void
  */
 void _error(input_t *inputs, char *message)
 {

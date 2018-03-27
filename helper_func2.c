@@ -1,56 +1,81 @@
 #include "shell.h"
 
 /**
+ * _printer - prints a string to standard error
+ * @str: string to print
  *
- *
- *
- *
- *
- *
- *
+ * Return: void
  */
-void _printer(char *s)
+void _printer(char *str)
 {
-	ssize_t count, len;
+	ssize_t num, len;
 
-	count = _strlen(s);
-	len = write(STDERR_FILENO, s, count);
-
-	if (len != count)
+	num = _strlen(str);
+	len = write(STDERR_FILENO, str, num);
+	if (len != num)
 	{
-		perror("Abandon Ship");
+		perror("Fatal Error");
 		exit(1);
 	}
+
 }
 
+
 /**
+ * _int_str - converts an unsigned int to a string
+ * @count: unsigned int to convert
  *
- *
- *
- *
- *
- *
+ * Return: pointer to the converted string
  */
 char *_int_str(unsigned int count)
 {
 	char *str;
-	unsigned int temp = 0, len = 0;
+	unsigned int temp, digit;
 
 	temp = count;
-
-	for (; temp != 0; len++)
+	for (digit = 0; temp != 0; digit++)
 		temp /= 10;
-	str = malloc(sizeof(char) * (len + 1));
+	str = malloc(sizeof(char) * (digit + 1));
 	if (str == NULL)
 	{
-		perror("Fatal Error - Abandon Ship");
+		perror("Abandon Ship!!");
 		exit(127);
 	}
-	str[len] = '\0';
-	for (--len; count; --len)
+	str[digit] = '\0';
+	for (--digit; count; --digit)
 	{
-		str[len] = (count % 10) + '0';
+		str[digit] = (count % 10) + '0';
 		count /= 10;
 	}
 	return (str);
+}
+
+/**
+ * _atoi - converts a string into an integer
+ * @str: string to convert
+ *
+ * Return: the integer value, or -1 if an error occurs
+ */
+int _atoi(char *s)
+{
+	unsigned int i, digits;
+	int num = 0, max;
+
+	max = INT_MAX;
+	for (digits = 0; max != 0; digits++)
+		max /= 10;
+	for (i = 0; s[i] != '\0' && i < digits; i++)
+	{
+		num *= 10;
+		if (s[i] < '0' || s[i] > '9')
+			return (-1);
+		if ((i == digits - 1) && (s[i] - '0' > INT_MAX % 10))
+			return (-1);
+		num += s[i] - '0';
+		if ((i == digits - 2) && (s[i + 1] != '\0') && (num > INT_MAX / 10))
+			return (-1);
+	}
+	if (i > digits)
+		return (-1);
+	return (num);
 }

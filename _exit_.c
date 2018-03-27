@@ -28,6 +28,6 @@ void _exit_(input_t *inputs)
 	free(inputs->buffer);
 	free(inputs->tokens);
 	free(inputs->commands);
-	free_env(inputs->env);
+	free_environ(inputs->env);
 	exit(inputs->status);
 }

@@ -1,68 +1,67 @@
 #include "shell.h"
 
 /**
+ * matching - checks if a character matches any in a string
+ * @c: character to check
+ * @str: string to check
  *
- *
- *
- *
- *
+ * Return: 1 if match, 0 if not
  */
-unsigned int matching(char n, const char *s)
+unsigned int matching(char c, const char *str)
 {
-	unsigned int i = 0;
+	unsigned int i;
 
-	for (; s[i] != '\0'; i++)
+	for (i = 0; str[i] != '\0'; i++)
 	{
-		if (n == s[i])
-			return (i);
+		if (c == str[i])
+			return (1);
 	}
 	return (0);
 }
 
 /**
- * _strtok - splits string based of delimiter
- * Uses Static var to remember string.
- * @str: input string thats duplicated and modified
- * @delim: delimiter used to break the duplicated string
- * Return: individual tokens or NULL if fails
+ * _strtok - custom strtok
+ * @str: string to tokenize
+ * @delim: delimiter to tokenize against
+ *
+ * Return: pointer to the next token or NULL
  */
 char *_strtok(char *str, const char *delim)
 {
-	static char *token_1;
+	static char *token;
 	static char *next;
-	unsigned int n;
+	unsigned int i;
 
 	if (str != NULL)
 		next = str;
-	token_1 = next;
-	if (token_1 == NULL)
+	token = next;
+	if (token == NULL)
 		return (NULL);
-	for (n = 0; next[n] != '\0'; n++)
+	for (i = 0; next[i] != '\0'; i++)
 	{
-		if (matching(next[n], delim) == 0)
+		if (matching(next[i], delim) == 0)
 			break;
 	}
-	if (next[n] == '\0'; || next[n] == '#')
+	if (next[i] == '\0' || next[i] == '#')
 	{
 		next = NULL;
 		return (NULL);
 	}
-	token_1 = next + n;
-	next = token_1;
-
-	for (n = 0; next[n] ! = '\0'; n++)
+	token = next + i;
+	next = token;
+	for (i = 0; next[i] != '\0'; i++)
 	{
-		if (matching(next[n], delim) == 1)
+		if (matching(next[i], delim) == 1)
 			break;
 	}
-	if (next[n] == '\0')
-		next == NULL;
+	if (next[i] == '\0')
+		next = NULL;
 	else
 	{
-		next[n] = '\0';
-		next = next + n + 1;
+		next[i] = '\0';
+		next = next + i + 1;
 		if (*next == '\0')
-			next == NULL;
+			next = NULL;
 	}
-	return (token_1);
+	return (token);
 }

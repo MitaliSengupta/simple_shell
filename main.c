@@ -1,57 +1,67 @@
-emacs#include "shell.h"
+#include "shell.h"
 
 /**
+ * sig_handler - handles ^C signal interupt
+ * @sig_handler: signal handler variable
  *
- *
- *
- *
- *
- *
+ * Return: void
  */
-int main (int argc, char **argv, char **environment)
+static void sig_handler(int sig_handler)
 {
-	size_t buff = 0;
-	unsigned int interactive = 0, n;
-	input_t cli = {NULL, NULL, NULL, NULL, NULL, 0, 0};
+	(void) sig_handler;
+	if (flag == 0)
+		_puts("\n$ ");
+	else
+		_puts("\n");
+}
+
+/**
+ * main - main function for the shell
+ * @argc: number of arguments passed to main
+ * @argv: array of arguments passed to main
+ * @environment: array of environment variables
+ *
+ * Return: 0 or exit status, or ?
+ */
+int main(int argc, char **argv, char **environment)
+{
+	size_t buffer = 0;
+	unsigned int interactive = 0, i;
+	input_t inputs = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	UNUSED(argc);
 
-	cli.argv = argv;
-	cli.env = init_env(environment);
-
+	inputs.argv = argv;
+	inputs.env = init_env(environment);
 	signal(SIGINT, sig_handler);
-
 	if (!isatty(STDIN_FILENO))
 		interactive = 1;
 	if (interactive == 0)
 		_puts("$ ");
 	flag = 0;
-
-	while (getline(&(vars.buffer), buff, stdin) != -1)
+	while (getline(&(inputs.buffer), &buffer, stdin) != -1)
 	{
 		flag = 1;
-
-		cli.count++;
-		cli.commands = tokenize(cli.buffer, ";");
-
-		for (n = 0; cli.commands && cli.commands[n] ! = NULL; n++)
+		inputs.count++;
+		inputs.commands = tokenize(inputs.buffer, ";");
+		for (i = 0; inputs.commands && inputs.commands[i] != NULL; i++)
 		{
-			cli.tokens = tokenize(cli.commands[n], "\n \t\r");
-			if (cli.tokens[0])
-				if (check_builtin(&cli) == NULL)
-					path_check(&cli);
-			free(cli.tokens);
+			inputs.tokens = tokenize(inputs.commands[i], "\n \t\r");
+			if (inputs.tokens && inputs.tokens[0])
+				if (_builtins(&inputs) == NULL)
+					check_path(&inputs);
+		free(inputs.tokens);
 		}
-		free(cli.buffer);
-		free(cli.commands);
+		free(inputs.buffer);
+		free(inputs.commands);
 		flag = 0;
 		if (interactive == 0)
 			_puts("$ ");
-		cli.buffer = NULL;
+		inputs.buffer = NULL;
 	}
 	if (interactive == 0)
 		_puts("\n");
-	free_environ(cli.env);
-	free(cli.buffer);
-	exit(cli.status);
+	free_environ(inputs.env);
+	free(inputs.buffer);
+	exit(inputs.status);
 }

@@ -1,68 +1,73 @@
 #include "shell.h"
 
 /**
- * _strcat - appends a string to another
- * @dest: string to append to
- * @src: string to be appended
- * Return: merged string
+ * _strcat - concatenates two strings
+ * @dest: first string
+ * @src: second string
+ * Return: pointer
  */
 char *_strcat(char *dest, char *src)
 {
 	char *new;
-	unsigned int s1 = 0, s2 = 0, len, i, n;
+	unsigned int len1, len2, len, i, j;
 
+	len1 = 0;
+	len2 = 0;
 	if (dest == NULL)
-		s1 = 0;
+		len1 = 0;
 	else
 	{
-		for (; dest[s1]; s1++)
+		for (len1 = 0; dest[len1]; len1++)
 			;
 	}
 	if (src == NULL)
-		s2 = 0;
+		len2 = 0;
 	else
 	{
-		for (; dest[s2]; s2++)
+		for (len2 = 0; src[len2]; len2++)
 			;
 	}
-	len = s1 + s2 + 2;
+	len = len1 + len2 + 2;
 	new = malloc(len * sizeof(char));
 	if (new == NULL)
 		return (NULL);
-	for (i = 0; i < s1; i++)
+	for (i = 0; i < len1; i++)
 		new[i] = dest[i];
-	newp[i] = '/';
-
-	for (n = 0; n < s2; n++)
-		new[i + 1 + n] = src[n];
-	new[s1 + s2 + 1] = '\0';
+	new[i] = '/';
+	for (j = 0; j < len2; j++)
+		new[i + 1 + j] = src[j];
+	new[len1 + len2 + 1] = '\0';
 	return (new);
 }
 
+
 /**
- * _strlen - gets length of string
- * @s: string to count
- * Return: Length of string.
+ * _strlen - returns the length of a string
+ * @s: string to be measured
+ * Return: length of string
  */
 unsigned int _strlen(char *s)
 {
-	unsigned int i = 0;
+	unsigned int len;
 
-	for (; s[i]; i++)
+	len = 0;
+
+	for (len = 0; s[len]; len++)
 		;
-	return (i);
+	return (len);
 }
+
 /**
- * _strncmp - compare string up to n length
- * @s1: string thats getting checked
- * @s2: comparing to
- * @n: amount of byes to search
- * Return: amount of bytes thats matched
+ * _strncmp - compares two strings
+ * @s1: first string, of two, to be compared in length
+ * @s2: second string, of two, to be compared
+ * Return: 0 on success, anything else is a failure
  */
 int _strncmp(char *s1, char *s2)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (s1[i] == s2[i])
 	{
 		if (s1[i] == '\0')
@@ -73,45 +78,44 @@ int _strncmp(char *s1, char *s2)
 }
 
 /**
- *
- *
- *
- *
- *
+ * _strdup - returns pointer to new mem alloc space which contains copy
+ * @duplicate: string to be duplicated
+ * Return: a pointer to the new duplicated string
  */
 char *_strdup(char *duplicate)
 {
-	char *dup;
-	int n = 0, i =0;
+	char *copy;
+
+		int len, i;
 
 	if (duplicate == 0)
 		return (NULL);
-	for (; duplicate[n]; n++)
-		;
-	dup = malloc((n + 1) * sizeof(char));
 
-	for (; i <= n; i++)
-		dup[i] = duplicate[i];
-	return (dup);
+	for (len = 0; duplicate[len]; len++)
+		;
+	copy = malloc((len + 1) * sizeof(char));
+
+	for (i = 0; i <= len; i++)
+		copy[i] = duplicate[i];
+
+	return (copy);
 }
 
 /**
+ * _puts - writes a string to standard output
+ * @s: string to write
  *
- *
- *
- *
- *
+ * Return: number of chars printed or -1 on failure
  */
 ssize_t _puts(char *s)
 {
 	ssize_t num, len;
 
 	num = _strlen(s);
-
 	len = write(STDOUT_FILENO, s, num);
 	if (len != num)
 	{
-		perror("The enterprise is lost");
+		perror("Fatal Error");
 		return (-1);
 	}
 	return (len);

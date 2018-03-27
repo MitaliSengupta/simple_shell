@@ -1,35 +1,34 @@
 #include "shell.h"
 
 /**
- * tokenize -  splits string into smaller strings
- * and palces them in an array
- * @arguments: string being examined
- * @delimiter: where the sting is being split
- * Return: array of char pointers representing tokens
+ * tokenize - tokenizes a buffer with a delimiter
+ * @arguments: buffer to tokenize
+ * @delimiter: delimiter to tokenize along
+ *
+ * Return: pointer to an array of pointers to the tokens
  */
 char **tokenize(char *arguments, char *delimiter)
 {
 	char **tokens = NULL;
-	size_t i, numtokens = 10;
+	size_t i = 0, count = 10;
 
 	if (arguments == NULL)
 		return (NULL);
-	/*allocate space in char *array  to hold tokens from string*/
-	tokens = malloc(sizeof(char *) * (numtokens));
+	tokens = malloc(sizeof(char *) * count);
 	if (tokens == NULL)
 	{
-		perror("You have reached the final frontier");
+		perror("Fatal Error");
 		return (NULL);
 	}
 	while ((tokens[i] = _strtok(arguments, delimiter)) != NULL)
 	{
 		i++;
-		if (i == numtokens)
+		if (i == count)
 		{
-			tokens = _realloc(tokens, &numcount);
+			tokens = _realloc(tokens, &count);
 			if (tokens == NULL)
 			{
-				perror("You are now on a different dimension");
+				perror("Fatal Error");
 				return (NULL);
 			}
 		}
