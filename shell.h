@@ -11,7 +11,7 @@
 #include <limits.h>
 #include <signal.h>
 
-extern unsigned int flag;
+extern  unsigned int flag;
 
 #define UNUSED(x) (void)(x)
 

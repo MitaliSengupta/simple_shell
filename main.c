@@ -11,7 +11,7 @@
 int main(int argc, char **argv, char **environment)
 {
 	size_t buffer = 0;
-	unsigned int interactive = 0, i, flag;
+	unsigned int interactive = 0, i, flag = 0;
 	input_t inputs = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	UNUSED(argc);
@@ -59,9 +59,10 @@ int main(int argc, char **argv, char **environment)
  */
 static void sig_handler(int sig_handler)
 {
-        (void) sig_handler;
-        if (flag == 0)
-                _puts("\n$ ");
-        else
-                _puts("\n");
+	unsigned int flag;
+	(void) sig_handler;
+	if (flag == 0)
+		_puts("\n$ ");
+	else
+		_puts("\n");
 }
