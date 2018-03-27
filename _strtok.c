@@ -1,52 +1,67 @@
 #include "shell.h"
 
 /**
- * _strtok - splits string based of delimiter
- * Uses Static var to remember string.
- * @str: input string thats duplicated and modified
- * @delim: delimiter used to break the duplicated string
- * Return: individual tokens or NULL if fails
+ * matching - checks if a character matches any in a string
+ * @c: character to check
+ * @str: string to check
+ *
+ * Return: 1 if match, 0 if not
+ */
+unsigned int matching(char c, const char *str)
+{
+	unsigned int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (c == str[i])
+			return (1);
+	}
+	return (0);
+}
+
+/**
+ * _strtok - custom strtok
+ * @str: string to tokenize
+ * @delim: delimiter to tokenize against
+ *
+ * Return: pointer to the next token or NULL
  */
 char *_strtok(char *str, const char *delim)
 {
-	static char *token_1;
-	static size_t i;
-	char *token;
-	size_t j;
+	static char *token;
+	static char *next;
+	unsigned int i;
 
-	if (str == NULL && i == 0)/*if str is null and never been run before*/
+	if (str != NULL)
+		next = str;
+	token = next;
+	if (token == NULL)
 		return (NULL);
-	if (str != NULL)/*during the first run*/
+	for (i = 0; next[i] != '\0'; i++)
 	{
-		token = _strdup(str);/*duplicate string*/
-		for (i = 0; token[i]; i++)/*loop through token*/
-		{
-			for (j = 0; delim[j]; j++)/*loop through delim*/
-			{
-				if (token[i] == delim[j])/*if match*/
-				{
-					i++;/*duplicate remainder of token for latter access*/
-					token_1 = _strdup(&token[i]),	i--;/*replace delim with null*/
-					token[i] = '\0';
-					token = _realloc(token, 0, i);/*realloc to required amount*/
-					if (token_1 == NULL || token == NULL)
-						return (NULL);
-					return (token);
-				}
-				if (token[i] == '\n')/*no match but when string ends in \n*/
-				{
-					free(token_1);/*free static token1 used to save remainder*/
-					return (token);
-				}
-			}
-		}
-		if (token == NULL)/*no match return duplicate copy*/
-		{
-			free(token_1);
-			return (token);
-		}
+		if (matching(next[i], delim) == 0)
+			break;
 	}
-	if (str == NULL)/*strtok(NULL,delim); access rest of tokens*/
-		return (_strtok(token_1, delim));/*use previously saved remainder*/
-	return (NULL);
+	if (next[i] == '\0' || next[i] == '#')
+	{
+		next = NULL;
+		return (NULL);
+	}
+	token = next + i;
+	next = token;
+	for (i = 0; next[i] != '\0'; i++)
+	{
+		if (matching(next[i], delim) == 1)
+			break;
+	}
+	if (next[i] == '\0')
+		next = NULL;
+	else
+	{
+		next[i] = '\0';
+		next = next + i + 1;
+		if (*next == '\0')
+			next = NULL;
+	}
+	return (token);
 }
