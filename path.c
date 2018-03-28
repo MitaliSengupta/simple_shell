@@ -75,7 +75,6 @@ void check_path(input_t *inputs)
 	char *path, *dup = NULL, *check = NULL;
 	unsigned int i = 0, r = 0;
 	char **path_tokens;
-	struct stat buf;
 
 	if (check_dir(inputs->tokens[0]))
 		r = exec_cwd(inputs);
@@ -89,7 +88,7 @@ void check_path(input_t *inputs)
 			for (i = 0; path_tokens && path_tokens[i]; i++, free(check))
 			{
 				check = _strcat(path_tokens[i], inputs->tokens[0]);
-				if (stat(check, &buf) == 0)
+				if (access(check, F_OK) == 0)
 				{
 					r = _execute(check, inputs);
 					free(check);
