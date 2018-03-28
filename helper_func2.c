@@ -56,7 +56,7 @@ char *_int_str(unsigned int count)
  *
  * Return: the integer value, or -1 if an error occurs
  */
-int _atoi(char *s)
+int _atoi(char *str)
 {
 	unsigned int i, digits;
 	int num = 0, max;
@@ -64,15 +64,15 @@ int _atoi(char *s)
 	max = INT_MAX;
 	for (digits = 0; max != 0; digits++)
 		max /= 10;
-	for (i = 0; s[i] != '\0' && i < digits; i++)
+	for (i = 0; str[i] != '\0' && i < digits; i++)
 	{
 		num *= 10;
-		if (s[i] < '0' || s[i] > '9')
+		if (str[i] < '0' || str[i] > '9')
 			return (-1);
-		if ((i == digits - 1) && (s[i] - '0' > INT_MAX % 10))
+		if ((i == digits - 1) && (str[i] - '0' > INT_MAX % 10))
 			return (-1);
-		num += s[i] - '0';
-		if ((i == digits - 2) && (s[i + 1] != '\0') && (num > INT_MAX / 10))
+		num += str[i] - '0';
+		if ((i == digits - 2) && (str[i + 1] != '\0') && (num > INT_MAX / 10))
 			return (-1);
 	}
 	if (i > digits)

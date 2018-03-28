@@ -11,13 +11,13 @@
 #include <limits.h>
 #include <signal.h>
 
-unsigned int flag;
+extern  unsigned int flag;
 
-#define UNUSED(x) (void)(x);
+#define UNUSED(x) (void)(x)
 
 /**
- * struct variables - variables
- * @av: command line arguments
+ * struct input - variables
+ * @tokens: command line arguments
  * @buffer: buffer of command
  * @env: environment variables
  * @count: count of commands entered
@@ -47,7 +47,7 @@ typedef struct builtins
 	void (*f)(input_t *);
 } builtins_t;
 
-
+static void sig_handler(int sig_handler);
 char **init_env(char **env);
 void free_environ(char **env);
 

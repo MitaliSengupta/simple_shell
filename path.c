@@ -154,7 +154,7 @@ int exec_cwd(input_t *inputs)
 			_error(inputs, ": Permission denied\n");
 			inputs->status = 126;
 		}
-			return (0);
+		return (0);
 	}
 	_error(inputs, ": not found\n");
 	inputs->status = 127;

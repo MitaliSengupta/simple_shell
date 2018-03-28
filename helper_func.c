@@ -85,8 +85,7 @@ int _strncmp(char *s1, char *s2)
 char *_strdup(char *duplicate)
 {
 	char *copy;
-
-		int len, i;
+	int len, i;
 
 	if (duplicate == 0)
 		return (NULL);
