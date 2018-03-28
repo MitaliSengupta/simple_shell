@@ -1,4 +1,19 @@
 #include "shell.h"
+unsigned int flag;
+/**
+ * sig_handler - handles ^C signal interupt
+ * @sig_handler: signal handler variable
+ *
+ * Return: void
+ */
+void sig_handler(int sig_handler)
+{
+        (void) sig_handler;
+        if (flag == 0)
+                _puts("\n$ ");
+        else
+                _puts("\n");
+}
 
 /**
  * main - main function for the shell
@@ -46,23 +61,8 @@ int main(int argc, char **argv, char **environment)
 	}
 	if (interactive == 0)
 		_puts("\n");
+	return (flag);
 	free_environ(inputs.env);
 	free(inputs.buffer);
 	exit(inputs.status);
-}
-
-/**
- * sig_handler - handles ^C signal interupt
- * @sig_handler: signal handler variable
- *
- * Return: void
- */
-static void sig_handler(int sig_handler)
-{
-	unsigned int flag;
-	(void) sig_handler;
-	if (flag == 0)
-		_puts("\n$ ");
-	else
-		_puts("\n");
 }
