@@ -11,7 +11,7 @@
 #include <limits.h>
 #include <signal.h>
 
-extern  unsigned int flag;
+extern unsigned int flag;
 
 #define UNUSED(x) (void)(x)
 
@@ -47,7 +47,7 @@ typedef struct builtins
 	void (*f)(input_t *);
 } builtins_t;
 
-static void sig_handler(int sig_handler);
+void sig_handler(int sig_handler);
 char **init_env(char **env);
 void free_environ(char **env);
 
