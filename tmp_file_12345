@@ -1,0 +1,68 @@
+
+========== _builtin.c ==========
+_builtins
+_env
+_setenv
+_unsetenv
+
+========== _env.c ==========
+_env.c:88: warning: No description found for parameter or member 'path'
+_env.c:89: warning: Excess function parameter 'key' description in 'find_env'
+_env.c:111: warning: No description found for parameter or member 'path'
+_env.c:112: warning: Excess function parameter 'key' description in 'add_value'
+init_env
+free_environ
+add_env
+find_env
+add_value
+
+========== _error.c ==========
+_error
+
+========== _exit_.c ==========
+_exit_
+
+========== helper_func2.c ==========
+helper_func2.c:59: warning: No description found for parameter or member 's'
+helper_func2.c:60: warning: Excess function parameter 'str' description in '_atoi'
+_printer
+_int_str
+_atoi
+
+========== helper_func.c ==========
+_strcat
+_strlen
+_strncmp
+_strdup
+_puts
+
+========== main.c ==========
+sig_handler
+main
+
+========== path.c ==========
+_execute
+find_path
+check_path
+exec_cwd
+check_dir
+
+========== _realloc.c ==========
+_realloc
+
+========== _strtok.c ==========
+matching
+_strtok
+
+========== tokenizer.c ==========
+tokenize
+
+========== shell.h ==========
+shell.h:14: ERROR: global variables are not allowed
+shell.h:16: WARNING: macros should not use a trailing semicolon
+total: 1 errors, 1 warnings, 91 lines checked
+shell.h:28: warning: no description found for struct input
+shell.h:36: warning: No description found for parameter or member 'tokens'
+shell.h:37: warning: Excess struct/union/enum/typedef member 'av' description in 'input'
+struct input
+struct builtins

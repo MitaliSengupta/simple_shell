@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _exit_ - exit program
+ * _exit_ - Exit program
  * @inputs: variables
  * Return: void
  */
