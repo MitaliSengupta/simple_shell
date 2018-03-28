@@ -1,4 +1,5 @@
 #include "shell.h"
+/* global variable for crtl + c*/
 unsigned int flag;
 /**
  * sig_handler - handles ^C signal interupt
@@ -8,11 +9,11 @@ unsigned int flag;
  */
 void sig_handler(int sig_handler)
 {
-        (void) sig_handler;
-        if (flag == 0)
-                _puts("\n$ ");
-        else
-                _puts("\n");
+	(void) sig_handler;
+	if (flag == 0)
+		_puts("\n$ ");
+	else
+		_puts("\n");
 }
 
 /**
