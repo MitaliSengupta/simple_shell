@@ -1,4 +1,4 @@
-.TH SIMPLE_SHELL "1" "21 March 18" "Simple Shell Man Page" "simple_shell man page"
+.TH SIMPLE_SHELL "1" "21 March 18" "Simple Shell Manpage" "simple_shell manpage"
 .SH NAME
 .B hsh -a simple holberton shell replacement
 .SH SYNOPSIS
