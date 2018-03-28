@@ -124,7 +124,7 @@ int exec_cwd(input_t *inputs)
 	pid_t child;
 	struct stat buf;
 
-	if (stat(inputs->tokens[0], &buf) == 0)
+	if (access(inputs->tokens[0], F_OK) == 0)
 	{
 		if (access(inputs->tokens[0], X_OK) == 0)
 		{
