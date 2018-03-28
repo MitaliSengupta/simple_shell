@@ -122,7 +122,6 @@ void check_path(input_t *inputs)
 int exec_cwd(input_t *inputs)
 {
 	pid_t child;
-	struct stat buf;
 
 	if (access(inputs->tokens[0], F_OK) == 0)
 	{
