@@ -1,6 +1,5 @@
 #include "shell.h"
-/* global variable for crtl + c*/
-unsigned int flag;
+
 /**
  * sig_handler - handles ^C signal interupt
  * @sig_handler: signal handler variable
@@ -10,10 +9,7 @@ unsigned int flag;
 void sig_handler(int sig_handler)
 {
 	(void) sig_handler;
-	if (flag == 0)
-		_puts("\n$ ");
-	else
-		_puts("\n");
+	_puts("\n$ ");
 }
 
 /**
@@ -27,7 +23,7 @@ void sig_handler(int sig_handler)
 int main(int argc, char **argv, char **environment)
 {
 	size_t buffer = 0;
-	unsigned int interactive = 0, i, flag = 0;
+	unsigned int interactive = 0, i;
 	input_t inputs = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	UNUSED(argc);
@@ -39,10 +35,9 @@ int main(int argc, char **argv, char **environment)
 		interactive = 1;
 	if (interactive == 0)
 		_puts("$ ");
-	flag = 0;
+
 	while (getline(&(inputs.buffer), &buffer, stdin) != -1)
 	{
-		flag = 1;
 		inputs.count++;
 		inputs.commands = tokenize(inputs.buffer, ";");
 		for (i = 0; inputs.commands && inputs.commands[i] != NULL; i++)
@@ -55,14 +50,12 @@ int main(int argc, char **argv, char **environment)
 		}
 		free(inputs.buffer);
 		free(inputs.commands);
-		flag = 0;
 		if (interactive == 0)
 			_puts("$ ");
 		inputs.buffer = NULL;
 	}
 	if (interactive == 0)
 		_puts("\n");
-	return (flag);
 	free_environ(inputs.env);
 	free(inputs.buffer);
 	exit(inputs.status);
