@@ -11,7 +11,7 @@ Tests done in VirtualBox on [Ubuntu](https://atlas.hashicorp.com/ubuntu/boxes/tr
 
 ## Repo Contents
 
-|   **File**    |  **Decription**                       |
+|   ***File***    |  **Decription**                       |
 |---------------|---------------------------------------|
 |  `shell.h`	|  Header file: contains prototypes	|
 |  `main.c`	|  Main file				|
